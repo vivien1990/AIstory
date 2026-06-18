@@ -177,4 +177,74 @@
 
 ---
 
+## 五 主题渔谣《望极浦》（音乐制作参考）
+
+> **双层结构**：表层＝渔村祭海祈福民谣（人人会唱）；内核＝古调残句「坎坎击鼓望极浦／泣珠报恩明年期」，全村只当老调，唯阿九（前世明微）无意识哼出、溟昭能接下句——这是全剧的声音母题与宿命锚点。
+
+**完整歌词（闽南语·汉字）**
+
+```
+[Intro] 噢～ 咿呀～ 咿～
+[Verse 1·祭海]
+坎坎鼓，响三暝
+香一炷，送王船
+拜海神，求保庇
+鱼满舱，人转来
+[Pre-Chorus·等待]
+阿爹出海 天未光
+阿母点灯 等天光
+一暝一暝 海茫茫
+[Chorus·古调嵌入·核心钩子]
+坎坎击鼓，望极浦
+泣珠报恩，明年期
+你若转来，我唱予你听
+[Verse 2]
+风会停，浪会平
+珠会红，泪会乾
+讲好的，明年期
+你敢会记 这句话
+[Bridge·男声低吟]
+……明年期…… ……我等你……
+[Outro] 望极浦…… 明年期…… 噢～ 咿呀～
+```
+
+**台罗发音参考**（进棚前请闽南语母语者校正）
+
+| 句 | 台罗近似 |
+|----|----------|
+| 坎坎鼓，响三暝 | khám-khám kóo, hiáng sann-mê |
+| 送王船 | sàng ông-tsûn |
+| 求保庇 | kiû pó-pì |
+| 人转来 | lâng tńg-lâi |
+| 等天光 | tán thinn-kng |
+| 海茫茫 | hái bâng-bâng |
+| 你若转来 | lí nā tńg-lâi |
+| 泪会乾 | lūi ē ta |
+| 你敢会记 | lí kám ē kì |
+| 我等你 | guá tán lí |
+
+**大意**：敲三夜祭海鼓，点香送王船，拜海神求保佑，盼鱼满舱、人平安归来。阿爹天没亮出海，阿母点灯等天亮，一夜夜海茫茫。（古调）敲着鼓望向海天尽头，以泪化珠报你的恩，约好明年再见。风会停浪会平、血珠会红眼泪会干；说好的明年，你还记得这句话吗？
+
+**音乐风格**
+- 流派：闽南语祭海仪式民谣 / 歌仔戏哭调
+- 主唱：女声清亮带哭腔（阿九/明微）；和声：男声极低吟，似从海底回应（"他"）
+- 调式：五声小调（羽调式）；速度 62 BPM，自由 rubato
+- 乐器：洞箫/竹笛、琵琶、二弦、祭祀大鼓、木鱼、海浪声、远处钟声
+- 氛围：苍凉、空灵、古老、祭祀、悲怆；重混响、lo-fi 实录质感
+
+**Suno Style 提示词**（可直接粘贴）
+
+```
+Hokkien Min-nan folk ritual chant, ancient coastal sea-worship song,
+solo female lead — clear airy fragile with crying tone (歌仔戏哭调),
+distant low male humming (answering from underwater), pentatonic minor
+(羽调式), nanguan instruments (dizi/xiao, pipa, erxian), deep ceremonial
+frame drum, wood-fish, ocean waves, temple bell, slow 62 BPM, free rubato,
+heavy reverb, sacred melancholic ethereal haunting, lo-fi field-recording
+```
+
+**Exclude**：`pop, EDM, rock, rap, autotune, major key, upbeat, English vocals, synth, drum kit`
+
+---
+
 *本文件为制作参考手册，完整游戏系统设计见内部版故事设定圣经。*
