@@ -1,0 +1,39 @@
+# 学习资料和语料库（本地学习用，不需上传）
+/TXT/
+/学习资料TXT/
+/novel_corpus/
+/方案一/
+方案二：*
+
+# 压缩包和图片
+*.rar
+*.zip
+*.jpg
+*.png
+*.gif
+
+# IDE 和编辑器
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# 临时文件
+修改方案一.md
+剧本圆桌-多身份提示词模板.md
+hit-game-principles.md
+短剧*.txt
+
+# node_modules（如果用到）
+node_modules/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# 系统文件
+.git/
