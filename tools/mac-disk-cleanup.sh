@@ -40,6 +40,7 @@ if [ "$(uname -s)" != "Darwin" ]; then
 fi
 
 TOTAL_KB=0
+TILDE='~'   # 用变量承载，避免 bash 3.2/5 对替换串中反斜杠的处理差异
 BOLD=$'\033[1m'; DIM=$'\033[2m'; RED=$'\033[31m'; GRN=$'\033[32m'; YLW=$'\033[33m'; RST=$'\033[0m'
 [ -t 1 ] || { BOLD=""; DIM=""; RED=""; GRN=""; YLW=""; RST=""; }
 
@@ -77,8 +78,8 @@ purge() {
   local label="$1"; shift
   local kb p; kb=$(size_of "$@")
   [ "${kb:-0}" -eq 0 ] && return 0
-  TOTAL_KB=$(( TOTAL_KB + kb ))
   if $DRY_RUN; then
+    TOTAL_KB=$(( TOTAL_KB + kb ))
     printf '  %-44s %10s  %s(可清理)%s\n' "$label" "$(human "$kb")" "$YLW" "$RST"
     return 0
   fi
@@ -89,9 +90,19 @@ purge() {
     case "$p" in
       ""|"/"|"$HOME"|"$HOME/"|"/System"*|"/Users") printf '%s跳过(受保护路径)%s ' "$RED" "$RST"; continue ;;
     esac
-    rm -rf -- "$p" 2>/dev/null || printf '%s删除失败:%s%s ' "$RED" "$p" "$RST"
+    rm -rf -- "$p" 2>/dev/null
   done
-  printf '%s已清理%s\n' "$GRN" "$RST"
+  # 以实际释放量为准，而不是假定删除成功
+  local after freed; after=$(size_of "$@"); freed=$(( kb - after ))
+  [ "$freed" -lt 0 ] && freed=0
+  TOTAL_KB=$(( TOTAL_KB + freed ))
+  if [ "$after" -eq 0 ]; then
+    printf '%s已清理%s\n' "$GRN" "$RST"
+  elif [ "$freed" -eq 0 ]; then
+    printf '%s未能删除（被占用或受系统保护），已跳过%s\n' "$RED" "$RST"
+  else
+    printf '%s部分清理：释放 %s，剩余 %s 被占用%s\n' "$YLW" "$(human "$freed")" "$(human "$after")" "$RST"
+  fi
 }
 
 # 运行一条命令式清理（brew cleanup 之类）
@@ -151,7 +162,7 @@ purge "Go 构建缓存"                         "$HOME/Library/Caches/go-build"
 purge "Composer 缓存"                       "$HOME/.composer/cache" "$HOME/Library/Caches/composer"
 purge "Puppeteer/Playwright 旧浏览器"       "$HOME/.cache/puppeteer" "$HOME/Library/Caches/ms-playwright"
 
-purge "用户日志（~/Library/Logs）"          "$HOME/Library/Logs"
+purge "用户日志（~/Library/Logs）"          "$HOME/Library/Logs"/*
 purge "崩溃报告"                            "$HOME/Library/Logs/DiagnosticReports"
 purge "QuickLook 缩略图缓存"                "$HOME/Library/Caches/com.apple.QuickLook.thumbnailcache"
 
@@ -197,7 +208,7 @@ if $DEEP; then
   while IFS= read -r d; do
     [ -z "$d" ] && continue
     found=1
-    purge "  $(printf '%s' "${d/#$HOME/\~}" | cut -c1-40)" "$d"
+    purge "  $(printf '%s' "${d/#$HOME/$TILDE}" | cut -c1-40)" "$d"
   done < <(find "$HOME" -maxdepth 6 -type d -name node_modules -mtime +90 -prune -print 2>/dev/null | head -40)
   [ "$found" -eq 0 ] && printf '  %s无%s\n' "$DIM" "$RST"
 else
@@ -223,14 +234,14 @@ done
 # ---------------------------------------------------------------- 家目录概览
 section "家目录占用 Top 15"
 du -skx "$HOME"/* "$HOME"/.[!.]* 2>/dev/null | sort -rn | head -15 | while read -r kb path; do
-  printf '  %-52s %10s\n' "${path/#$HOME/\~}" "$(human "$kb")"
+  printf '  %-52s %10s\n' "${path/#$HOME/$TILDE}" "$(human "$kb")"
 done
 
 if $SHOW_BIG; then
   section "家目录中的超大文件（>500MB，跳过 iCloud/照片库）"
   find "$HOME" -type d \( -name '*.photoslibrary' -o -name 'Mobile Documents' -o -name '.Trash' \) -prune -o \
        -type f -size +500M -print 2>/dev/null | head -30 | while IFS= read -r f; do
-    printf '  %-52s %10s\n' "$(printf '%s' "${f/#$HOME/\~}" | cut -c1-52)" "$(human "$(size_of "$f")")"
+    printf '  %-52s %10s\n' "$(printf '%s' "${f/#$HOME/$TILDE}" | cut -c1-52)" "$(human "$(size_of "$f")")"
   done
 fi
 
